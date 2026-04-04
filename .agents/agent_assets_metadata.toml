@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "242j2VjyWS-mGbZxNS80g"
+uri = "file://artifacts/vesta/src/assets/hero.png"
+type = "image"
+title = "Elegant wardrobe styling hero image"

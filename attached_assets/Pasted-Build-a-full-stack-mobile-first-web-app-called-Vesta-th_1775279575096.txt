@@ -1,0 +1,109 @@
+Build a full-stack mobile-first web app called “Vesta” that helps users upload their clothes and get the best outfit combinations, especially matching pants with top wear.
+
+Goal:
+Create a clean, modern wardrobe app where a user can upload all the dresses/clothes they own, organize them, and get smart recommendations for the best matching combinations between pants and top wear.
+
+Main features:
+
+1. Authentication
+- User signup and login
+- Secure account-based wardrobe storage
+- Each user should only see their own clothes and outfit suggestions
+
+2. Wardrobe management
+- Users can upload clothing items with image
+- Each item should have:
+  - name
+  - category (pant, shirt, t-shirt, top wear, jeans, cargo, hoodie, jacket)
+  - color
+  - pattern (plain, striped, checked, printed)
+  - fit (slim, regular, oversized)
+  - style (casual, formal, streetwear, party, traditional)
+  - season (summer, winter, all-season)
+  - optional notes
+- Show uploaded clothes in a visual grid
+- Allow edit and delete for each item
+
+3. Smart outfit matching
+- User can select one pant and the app should recommend the best matching top wear
+- User can also select one top wear and the app should recommend matching pants
+- Matching should use rule-based scoring:
+  - color compatibility
+  - style compatibility
+  - pattern balance
+  - occasion suitability
+- Each recommendation should show a match score out of 10
+- Show reason for recommendation, for example:
+  - “White shirt matches black pants because of strong neutral contrast”
+  - “Plain beige top balances patterned cargo pants”
+
+4. Filters and outfit generation
+- Filter recommendations by:
+  - casual
+  - formal
+  - college
+  - party
+  - gym
+  - travel
+- Add a “Generate Outfit” button to create the best full combination
+- Allow saving favorite outfits
+
+5. Dashboard / pages
+Create these pages:
+- Login / Signup page
+- Home dashboard
+- My Wardrobe page
+- Upload Item page
+- Item Details page
+- Outfit Suggestions page
+- Favorites page
+- Profile page
+
+6. UI/UX
+- Mobile-first responsive design
+- Very clean, modern, stylish interface
+- Card-based clothing layout with image preview
+- Smooth navigation and polished styling
+- Use a fashion-oriented design aesthetic with good spacing and modern typography
+- Add empty states and loading states
+
+7. Tech requirements
+- Build using a modern stack suitable for Replit
+- Recommended:
+  - Frontend: React or Next.js
+  - Backend: Node.js + Express
+  - Database: SQLite or PostgreSQL
+  - File/image upload support
+- Organize code cleanly into frontend, backend, components, and utility logic
+- Add clear comments in important sections
+
+8. Matching engine logic
+Implement a simple rule-based outfit recommendation system such as:
+- Black pants match white, grey, beige, olive, and blue tops
+- Blue jeans match black, white, maroon, grey, and oversized shirts
+- Avoid too many strong patterns together
+- Plain + patterned is preferred over patterned + patterned
+- Formal shirts should match chinos or formal pants better than joggers
+- Oversized tees pair well with cargos and jeans
+Create a reusable scoring function for match quality.
+
+9. Bonus features if possible
+- Search wardrobe items
+- Sort by color/category/style
+- Mark unavailable items (laundry)
+- Recently generated outfits section
+- Dark mode
+- Option to manually like/dislike recommendations to improve future suggestions
+
+10. Deliverables
+- Fully working app
+- Seed/demo data for testing
+- Clean folder structure
+- README with setup and run instructions
+- Nice sample UI with realistic dummy clothing data
+
+Important:
+- Make the app functional, not just a static design
+- Focus strongly on the wardrobe upload flow and outfit recommendation engine
+- Keep the first version simple but polished
+- Ensure the recommendation system is easy to expand later into AI-based suggestions
