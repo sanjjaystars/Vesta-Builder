@@ -1,20 +1,17 @@
 import { Router, type IRouter } from "express";
 import { getAuth } from "@clerk/express";
-import { eq, and, ilike, sql } from "drizzle-orm";
+import { eq, and, ilike } from "drizzle-orm";
 import { db, clothingItemsTable } from "@workspace/db";
 import {
   CreateClothingItemBody,
   UpdateClothingItemBody,
-  GetClothingItemParams,
-  UpdateClothingItemParams,
-  DeleteClothingItemParams,
-  ToggleClothingAvailabilityParams,
   ToggleClothingAvailabilityBody,
   ListClothingItemsResponse,
   GetClothingItemResponse,
   UpdateClothingItemResponse,
   ToggleClothingAvailabilityResponse,
 } from "@workspace/api-zod";
+import { serializeItem, serializeItems } from "../lib/serialize";
 
 const router: IRouter = Router();
 
@@ -68,7 +65,7 @@ router.get("/clothing", requireAuth, async (req: any, res): Promise<void> => {
     .where(and(...conditions))
     .orderBy(clothingItemsTable.createdAt);
 
-  res.json(ListClothingItemsResponse.parse(items));
+  res.json(ListClothingItemsResponse.parse(serializeItems(items as any[])));
 });
 
 // POST /clothing
@@ -86,7 +83,7 @@ router.post("/clothing", requireAuth, async (req: any, res): Promise<void> => {
     .values({ ...parsed.data, userId })
     .returning();
 
-  res.status(201).json(item);
+  res.status(201).json(serializeItem(item as any));
 });
 
 // GET /clothing/:id
@@ -110,7 +107,7 @@ router.get("/clothing/:id", requireAuth, async (req: any, res): Promise<void> =>
     return;
   }
 
-  res.json(GetClothingItemResponse.parse(item));
+  res.json(GetClothingItemResponse.parse(serializeItem(item as any)));
 });
 
 // PATCH /clothing/:id
@@ -141,7 +138,7 @@ router.patch("/clothing/:id", requireAuth, async (req: any, res): Promise<void> 
     return;
   }
 
-  res.json(UpdateClothingItemResponse.parse(item));
+  res.json(UpdateClothingItemResponse.parse(serializeItem(item as any)));
 });
 
 // DELETE /clothing/:id
@@ -196,7 +193,7 @@ router.patch("/clothing/:id/availability", requireAuth, async (req: any, res): P
     return;
   }
 
-  res.json(ToggleClothingAvailabilityResponse.parse(item));
+  res.json(ToggleClothingAvailabilityResponse.parse(serializeItem(item as any)));
 });
 
 export default router;

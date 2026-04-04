@@ -4,9 +4,9 @@ import { eq, and } from "drizzle-orm";
 import { db, clothingItemsTable, favoriteOutfitsTable } from "@workspace/db";
 import {
   SaveFavoriteBody,
-  DeleteFavoriteParams,
   ListFavoritesResponse,
 } from "@workspace/api-zod";
+import { serializeItem, serializeFavorite } from "../lib/serialize";
 
 const router: IRouter = Router();
 
@@ -58,7 +58,7 @@ router.get("/favorites", requireAuth, async (req: any, res): Promise<void> => {
   // Filter out any favorites where items were deleted
   const valid = enriched.filter((f) => f.top && f.bottom);
 
-  res.json(ListFavoritesResponse.parse(valid));
+  res.json(ListFavoritesResponse.parse(valid.map((f) => serializeFavorite(f as any))));
 });
 
 // POST /favorites
@@ -86,7 +86,7 @@ router.post("/favorites", requireAuth, async (req: any, res): Promise<void> => {
     .from(clothingItemsTable)
     .where(eq(clothingItemsTable.id, bottomId));
 
-  res.status(201).json({ ...fav, top, bottom });
+  res.status(201).json(serializeFavorite({ ...fav, top, bottom } as any));
 });
 
 // DELETE /favorites/:id

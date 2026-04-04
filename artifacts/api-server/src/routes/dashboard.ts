@@ -3,6 +3,7 @@ import { getAuth } from "@clerk/express";
 import { eq, desc } from "drizzle-orm";
 import { db, clothingItemsTable, favoriteOutfitsTable } from "@workspace/db";
 import { GetDashboardSummaryResponse, GetRecentItemsResponse } from "@workspace/api-zod";
+import { serializeItems } from "../lib/serialize";
 
 const router: IRouter = Router();
 
@@ -63,7 +64,7 @@ router.get("/dashboard/recent", requireAuth, async (req: any, res): Promise<void
     .orderBy(desc(clothingItemsTable.createdAt))
     .limit(6);
 
-  res.json(GetRecentItemsResponse.parse(items));
+  res.json(GetRecentItemsResponse.parse(serializeItems(items as any[])));
 });
 
 export default router;

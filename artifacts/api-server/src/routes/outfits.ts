@@ -9,6 +9,7 @@ import {
   GenerateOutfitResponse,
 } from "@workspace/api-zod";
 import { findMatches, generateBestOutfit } from "../lib/matcher";
+import { serializeItem } from "../lib/serialize";
 
 const router: IRouter = Router();
 
@@ -53,7 +54,12 @@ router.post("/outfits/match", requireAuth, async (req: any, res): Promise<void> 
 
   const matches = findMatches(anchor, wardrobe, filterStyle);
 
-  res.json(GetOutfitMatchesResponse.parse(matches));
+  const serializedMatches = matches.map((m: any) => ({
+    ...m,
+    top: serializeItem(m.top),
+    bottom: serializeItem(m.bottom),
+  }));
+  res.json(GetOutfitMatchesResponse.parse(serializedMatches));
 });
 
 // POST /outfits/generate
@@ -78,7 +84,12 @@ router.post("/outfits/generate", requireAuth, async (req: any, res): Promise<voi
     return;
   }
 
-  res.json(GenerateOutfitResponse.parse(outfit));
+  const serializedOutfit = {
+    ...(outfit as any),
+    top: serializeItem((outfit as any).top),
+    bottom: serializeItem((outfit as any).bottom),
+  };
+  res.json(GenerateOutfitResponse.parse(serializedOutfit));
 });
 
 export default router;
